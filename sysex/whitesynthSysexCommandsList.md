@@ -8,7 +8,7 @@
 | `00 00 nn nn` | 시스템 설정(리셋 sysex라던가) |
 | `01 00 nn nn` | 기본 설정 |
 | `02 00 nn nn` | 기본 이펙트 관련 설정 |
-| `02 01 nn nn` | Common multi effect 관련 설정 |
+| `02 01 nn nn` | Multi effect 프리셋 관련 설정 |
 | `03 0x nn nn` | 채널별 설정(x번): Multi effect 관련 설정 |
 
 ## 추가사항
@@ -132,39 +132,39 @@ reverb 이펙트에서 소리가 울리기 시작하는 시간을 설정한다.
   - `kk`: 0 - 127 (ms)
     - 기본값: 0
 
-### Common multi effect 관련 설정
+### Multi effect 프리셋 관련 설정
 
-#### Common multi effect type - `02 01 1x 00`
+#### Multi effect preset type - `02 01 1x 00`
 해당 이펙트 종류를 설정한다. 이걸 설정하면 모든 파라미터의 값이 이펙트별 기본값으로 지정된다.  
 종류에 대해서는 [여기](./multiEffects.md)를 참조하라.
 
 - 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 0x 01 kk ll mm F7`
-  - `x` = 이펙터 번호 (`0x0` - `0xF`)
+  - `x` = 프리셋 번호 (`0x0` - `0xF`)
 - 데이터: `kk ll mm`
   - `kk ll mm`: `0x00 0x00 0x00` - `0x7F 0x7F 0x7F`
     - 기본값: `0x00 0x00 0x00` (None)
 
-#### Common multi effect parameter - `02 01 2x pp`
+#### Multi effect preset parameter - `02 01 2x pp`
 해당 이펙트 파라미터를 설정한다.
 
 - 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 2y pp kk ... kk F7`
-  - `x` = 이펙터 번호 (`0x0` - `0xF`)
+  - `x` = 프리셋 번호 (`0x0` - `0xF`)
   - `pp` = 파라미터 번호 (`0x00` - `0x2F`)
 - 데이터: `kk ... kk`
   - `kk ... kk`: 몇개가 될지, 값의 범위가 어떻게 될지는 모름
 
-### 채널별 Multi effect 관련 설정
+### Multi effect 관련 설정
 
-#### Multi effect unit - `03 0x 0y 00`
-해당 채널이 Common multi effect의 이펙터를 사용할 것인지 이 채널에서 따로 이펙터를 설정할 것인지 설정한다.  
-전자의 경우(`kk` = `0x00` - `0x0F` 인 경우) 종류와 파라미터도 그쪽을 따라가며, 후자의 경우(`kk` = `0x7F` 인 경우) 아래의 채널별 Multi effect 설정을 통해 종류와 파라미터를 설정할 수 있다.
+#### Load multi effect preset - `03 0x 0y 00`
+해당 채널의 해당 이펙터에 지정된 프리셋을 적용한다.
+
+그저 명령어이므로 데이터 기본값은 따로 없다.
 
 - 전체 Sysex 형태: `F0 7D 10 0B 15 03 0x 0y 00 kk F7`
   - `x` = 채널 번호 (`0x0` - `0xF`)
   - `y` = 이펙터 번호 (`0x0` - `0xF`)
 - 데이터: `kk`
-  - `kk`: `0x00` - `0x0F` (Common multi effect), `0x7F` (Channel multi effect)
-    - 기본값: `0x7F` (Channel multi effect)
+  - `kk`: `0x00` - `0x0F`
 
 #### Multi effect type - `03 0x 1y 00`
 해당 채널에서 사용되는 이펙트 종류를 설정한다. 이걸 설정하면 모든 파라미터의 값이 이펙트별 기본값으로 지정된다.  
