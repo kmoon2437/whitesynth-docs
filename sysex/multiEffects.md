@@ -1,6 +1,6 @@
 # Multi effect(MFX)
 Multi effect(이하 MFX)는 지정된 채널에 갖가지 이펙트(distortion,overdrive 등등등 뭐가 많음)를 넣을 수 있는 기능으로, 넣은 이펙트에 따라 정말 별의별 소리를 다 낼 수 있다.
-whitesynth에서는 채널별로 16개까지 사용할 수 있다.
+whitesynth에서는 채널별로 16개까지 사용할 수 있으며, 이펙터 번호 순으로 적용된다.
 
 ## `0x24` - `0x2F` 파라미터에 대해
 `0x24` - `0x2F` 파라미터는 이펙터의 종류에 상관없이 공통으로 들어가는 파라미터이다.
@@ -35,29 +35,30 @@ whitesynth에서는 채널별로 16개까지 사용할 수 있다.
 | `0x00` | Drive | 0 - 16383 | 0 | drive의 정도를 조정한다. |
 | `0x01` | Amp type | Small,Combo,Stack,Tube<br>(0, 1, 2, 3) | Tube (3) | 기타 앰프 종류를 선택한다.[^GuitarAmpType] |
 
+[^GuitarAmpType]: Small = 소형 앰프,Combo = 콤보 앰프,Stack = 스택 앰프,Tube = 진공관 앰프. roland sound canvas와 호환되도록 지원할 때 각각 Small,Built-in,2 stack,3 stack에 대응하도록 구현 예정.
+
 ### Overdrive - `00 10 01`
 일렉기타의 overdrive 이펙트를 적용한다.
+
+일렉기타용으로 사용할 땐 위의 Amp simulator 앞에 설정해서 사용하는 것이 좋다.
 
 #### 파라미터
 
 | 파라미터 번호 | 이름 | 값 | 기본값 | 설명 |
 | --- | -------- | ----- | --- | ------------ |
 | `0x00` | Drive | 0 - 16383 | 6144 | drive의 정도를 조정한다. |
-| `0x01` | Amp type | Small,Combo,Stack,Tube<br>(0, 1, 2, 3) | Combo (1) | 기타 앰프 종류를 선택한다.[^GuitarAmpType] |
-| `0x02` | Amp on/off | off,on<br>(0, 1) | on (1) | 기타 앰프를 켜고 끈다. |
 
 ### Distortion - `00 10 02`
-일렉기타의 distortion 이펙트를 적용한다.
+일렉기타의 distortion 이펙트를 적용한다. 소리를 의도적으로 매우 크게 증폭시킨 다음 클리핑을 하는 이펙트이다.
+
+일렉기타용으로 사용할 땐 위의 Amp simulator 앞에 설정해서 사용하는 것이 좋다.
 
 #### 파라미터
 
 | 파라미터 번호 | 이름 | 값 | 기본값 | 설명 |
 | --- | -------- | ----- | --- | ------------ |
 | `0x00` | Drive | 0 - 16383 | 9728 | drive의 정도를 조정한다. |
-| `0x01` | Amp type | Small,Combo,Stack,Tube<br>(0, 1, 2, 3) | Tube (3) | 기타 앰프 종류를 선택한다.[^GuitarAmpType] |
-| `0x02` | Amp on/off | off,on<br>(0, 1) | on (1) | 기타 앰프를 켜고 끈다. |
 
-[^GuitarAmpType]: Small = 소형 앰프,Combo = 콤보 앰프,Stack = 스택 앰프,Tube = 진공관 앰프. roland sound canvas와 호환되도록 지원할 때 각각 Small,Built-in,2 stack,3 stack에 대응하도록 구현 예정.
 
 <!-- 필터 계통 (00 20 nn) -->
 
