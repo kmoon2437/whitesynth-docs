@@ -1,16 +1,6 @@
 # Control change 관련 파라미터
 문서가 너무 길어져서 여기에 따로 적는다. 값의 공식에 대해서는 [여기](./midiImplementation.md)의 첫 부분에 적혀 있다.
 
-Filter 관련 내용 참조:
-- <https://miing95.tistory.com/22>
-  - PC용 페이지 아카이브: <https://web.archive.org/web/20230118085919/https://miing95.tistory.com/22>
-  - 모바일용 페이지 아카이브: <https://web.archive.org/web/20230118085755/https://miing95.tistory.com/m/22>
-- <https://www.cuonet.com/bbs/board.php?bo_table=qna2&wr_id=1033642>
-  - 얘는 사이트가 봇을 막아놔서 아카이브를 못함
-- <https://blog.naver.com/suya309/221437120375>
-  - PC용 페이지 아카이브: <https://web.archive.org/web/20230118090918/https://blog.naver.com/suya309/221437120375>
-  - 모바일용 페이지 아카이브: <https://web.archive.org/web/20230118091437/https://m.blog.naver.com/suya309/221437120375>
-
 ## 일반 파라미터
 이름 옆에 `CC#n` 과 같이 번호를 적어 두었다.
 
@@ -34,6 +24,18 @@ Bn 20 ll
 #### 형식
 ```
 Bn 01 vv
+```
+- `n` = 미디 채널 번호: 1 - 16(`0x0` - `0xf`)
+- `vv` = 값: 0 - 127(`0x00` - `0x7f`), 기본값 = 0(`0x00`)
+
+### Foot pedal - `CC#4`
+발로 밟는 페달을 조정하는 파라미터. 일반적으로 값이 클수록 페달을 더 밟은 게 되며, 값이 0이면 아예 발을 뗀 것이 되고 127이면 최대로 밟은 게 된다.
+
+아래에서 서술할 Damper pedal(Sustain pedal)과는 용도가 아예 다르며, 이쪽은 드럼의 하이햇 페달 같은 걸 밟는 걸 제어할 때 쓰는 용도이다.
+
+#### 형식
+```
+Bn 04 vv
 ```
 - `n` = 미디 채널 번호: 1 - 16(`0x0` - `0xf`)
 - `vv` = 값: 0 - 127(`0x00` - `0x7f`), 기본값 = 0(`0x00`)

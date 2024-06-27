@@ -82,10 +82,10 @@ F0 7E 7F rr rr vv ... vv F7
 미디 장치가 위의 Identity request 메세지를 받으면 보내는 메세지. **사용자가 보내는 게 아니다!**
 
 - 전체 Sysex 형태: `F0 7E 7F 06 02 7D 19 72 11 21 mm jj ii pp F7`
-- 데이터: `7D 19 72 11 21 mm jj ii pp`
+- 데이터: `7D 00 00 0B 15 mm jj ii pp`
   - `7D`: 제조사 ID (개발/테스트용)
-  - `19 72`: 제품군 ID
-  - `11 21`: 모델 ID (whitesynth)
+  - `00 00`: 제품군 ID
+  - `0B 15`: 모델 ID (whitesynth)
   - `mm jj ii pp`: 장치 버전 (whitsynth의 경우 현재 프로그램의 버전을 반환한다)
     - `mm jj`: 메이저 버전
     - `ii`: 마이너 버전
@@ -114,7 +114,7 @@ F0 41 10 42 12 40 00 7F 00 41 F7
 
 ### 기본 구조
 ```
-F0 7D 10 0B 15 ii rr rr rr rr vv ... vv F7
+F0 7D 10 0B 15 rr rr rr rr vv ... vv F7
 ```
 - `F0` = 이 메세지가 Sysex 메세지임을 의미함
 - `7D` = 제조사 ID (개발/테스트용)

@@ -41,6 +41,9 @@ Modulation(`CC#1`) 파라미터로 인한 pitch modulation의 depth를 조절한
 ## NRPN
 미디음원 자체 기능이다. 근데 sc 8820이랑 mu2000이랑 비슷한 게 되게 많아서 좀 쓸어왔다.
 
+### Soundfont 2 표준 관련
+Soundfont 표준 쪽에 뭐가 좀 많다. 자세한 건 [여기](./soundfont2NRPNs.md)를 참조하라.
+
 ### Vibrato rate - `01 08`
 `CC#76`의 값을 이 명령의 MSB 값으로 변경한다.
 
