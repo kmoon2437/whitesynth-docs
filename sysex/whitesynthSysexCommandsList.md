@@ -8,6 +8,7 @@
 | `00 00 nn nn` | 시스템 설정(리셋 sysex라던가) |
 | `01 00 nn nn` | 기본 설정 |
 | `02 00 nn nn` | 기본 이펙트 관련 설정 |
+| `02 01 nn nn` | Variation effect 관련 설정 |
 | `03 0x nn nn` | 채널별 설정(x번): Multi effect 관련 설정 |
 
 ## 추가사항
@@ -108,6 +109,63 @@ reverb 출력음의 level을 설정한다.
   - `kk ll`: 0 - 16383
     - 기본값: 8192
 
+### Variation effect 관련 설정
+
+#### Variation effect type - `02 01 1y 00`
+해당 이펙터의 이펙트 종류를 설정한다. 이걸 설정하면 모든 파라미터의 값이 이펙트별 기본값으로 지정된다.  
+종류에 대해서는 [여기](./multiEffects.md)를 참조하라.
+
+- 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 1y 00 kk ll mm F7`
+  - `y` = 이펙터 번호 (`0x0` - `0xF`)
+- 데이터: `kk ll mm`
+  - `kk ll mm`: `0x00 0x00 0x00` - `0x7F 0x7F 0x7F`
+    - 기본값: `0x00 0x00 0x00` (None)
+
+#### Variation effect parameter - `02 01 2y pp`
+해당 이펙터의 파라미터를 설정한다.
+
+- 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 2y pp kk ll F7`
+  - `y` = 이펙터 번호 (`0x0` - `0xF`)
+  - `pp` = 파라미터 번호 (`0x00` - `0x2F`)
+- 데이터: `kk ll`
+  - `kk ll`: 0 - 16383 (big endian 정수형. 각 바이트의 제일 앞 비트는 무시함)
+    - 기본값: 파라미터에 따라 다름
+
+#### Variation effect reverb send level - `02 01 30 00`
+variation effect 출력에 대한 reverb send level을 설정한다.
+
+- 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 30 00 kk ll F7`
+- 데이터: `kk ll`
+  - `kk ll`: 0 - 16383 (big endian 정수형. 각 바이트의 제일 앞 비트는 무시함)
+    - 기본값: 5160
+
+#### Variation effect chorus send level - `02 01 30 01`
+variation effect 출력에 대한 chorus send level을 설정한다.
+
+- 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 30 01 kk ll F7`
+- 데이터: `kk ll`
+  - `kk ll`: 0 - 16383 (big endian 정수형. 각 바이트의 제일 앞 비트는 무시함)
+    - 기본값: 0
+
+#### Variation effect delay send level - `02 01 30 02`
+variation effect 출력에 대한 delay send level을 설정한다.
+
+- 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 30 02 kk ll F7`
+- 데이터: `kk ll`
+  - `kk ll`: 0 - 16383 (big endian 정수형. 각 바이트의 제일 앞 비트는 무시함)
+    - 기본값: 0
+
+#### Variation effect on/off - `02 01 40 0x`
+해당 채널의 출력을 variation effect에 넘길지 설정한다. 설정하는 경우 reverb/chorus/delay send level은 variation effect에서 설정한 쪽으로 맞춰진다.
+
+- 전체 Sysex 형태: `F0 7D 10 0B 15 02 01 40 0x kk F7`
+  - `x` = 채널 번호 (`0x0` - `0xF`)
+  - `y` = 이펙터 번호 (`0x0` - `0xF`)
+  - `pp` = 파라미터 번호 (`0x00` - `0x2F`)
+- 데이터: `kk`
+  - `kk`: 0(off), 1(on)
+    - 기본값: 0(off)
+
 ### Multi effect 관련 설정
 
 #### Multi effect type - `03 0x 1y 00`
@@ -124,23 +182,10 @@ reverb 출력음의 level을 설정한다.
 #### Multi effect parameter - `03 0x 2y pp`
 해당 채널의 해당 이펙터의 파라미터를 설정한다.
 
-- 전체 Sysex 형태: `F0 7D 10 0B 15 03 0x 2y pp kk ... kk F7`
+- 전체 Sysex 형태: `F0 7D 10 0B 15 03 0x 2y pp kk ll F7`
   - `x` = 채널 번호 (`0x0` - `0xF`)
   - `y` = 이펙터 번호 (`0x0` - `0xF`)
   - `pp` = 파라미터 번호 (`0x00` - `0x2F`)
 - 데이터: `kk ll`
   - `kk ll`: 0 - 16383 (big endian 정수형. 각 바이트의 제일 앞 비트는 무시함)
     - 기본값: 파라미터에 따라 다름
-
-#### Multi effect processing mode - `03 0x 30 00`
-해당 채널의 multi effect 전체를 어느 시점에서 처리할지 설정한다.
-
-값이 0인 경우, 이펙트를 처리한 뒤에 채널 volume 값을 적용한다. 따라서 `CC#7` 값이 해당 채널의 최종 출력 볼륨을 조절하게 된다.
-
-값이 1인 경우, volume 처리까지 모두 한 다음 이펙트 처리를 한다. 따라서 가장 마지막 이펙트 설정의 Level 파라미터가 사실상의 최종 출력 볼륨으로 작용한다.
-
-- 전체 Sysex 형태: `F0 7D 10 0B 15 03 0x 30 00 kk F7`
-  - `x` = 채널 번호 (`0x0` - `0xF`)
-- 데이터: `kk`
-  - `kk`: 0, 1 (GS sysex로 이펙트 설정시 1로 고정)
-    - 기본값: 0

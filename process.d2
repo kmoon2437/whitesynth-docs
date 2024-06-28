@@ -1,0 +1,57 @@
+direction: down
+
+channel: {
+    style.multiple: true
+    
+    voices: {
+        style.multiple: true
+    }
+
+    MFX: {
+        style.multiple: true
+        
+        mfx units: {
+            style.multiple: true
+        }
+    }
+    
+    output
+
+    voices -> MFX: expression(CC11), envelope
+
+    MFX -> EQ
+
+    EQ -> output: channel volume(CC7)
+}
+
+variation: {
+    variation units: {
+        style.multiple: true
+    }
+}
+
+reverb
+chorus
+delay
+
+final output
+
+channel.output -> variation: variation on
+channel.output -> final output: dry output
+
+channel.output -> reverb: reverb send level(CC91)
+channel.output -> chorus: chorus send level(CC93)
+channel.output -> delay: delay send level(CC94)
+
+variation -> reverb: variation reverb send level
+variation -> chorus: variation chorus send level
+variation -> delay: variation delay send level
+
+reverb -> final output: reverb level
+chorus -> final output: chorus level
+delay -> final output: delay level
+
+delay -> reverb: delay send level to reverb
+
+chorus -> delay: chorus send level to delay
+chorus -> reverb: chorus send level to reverb
