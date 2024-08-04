@@ -167,6 +167,16 @@ Bn 43 vv
 - `n` = 미디 채널 번호: 1 - 16(`0x0` - `0xf`)
 - `vv` = 값: 값을 x라 할 때, x <= 63 이면 off, x >= 64 이면 on이다. 기본값 = off(0)
 
+### Legato footswitch - `CC#68`
+Legato를 on off한다.
+
+#### 형식
+```
+Bn 44 vv
+```
+- `n` = 미디 채널 번호: 1 - 16(`0x0` - `0xf`)
+- `vv` = 값: 값을 x라 할 때, x <= 63 이면 off, x >= 64 이면 on이다. 기본값 = off(0)
+
 ### Low-pass filter(LPF) resonance - `CC#71`
 Low-pass filter(LPF)의 resonance의 정도를 설정한다.  
 이 값을 기준으로 LPF의 Q 값을 산출한다.
