@@ -80,17 +80,19 @@ Soundfont 표준 쪽에 뭐가 좀 많다. 자세한 건 [여기](./soundfont2NR
 `LSB` = 무시됨
 
 ### High-pass filter(HPF) cutoff - `01 24`
-`CC#81`의 값을 이 명령의 MSB 값으로 변경한다.
+High-pass filter(HPF)의 cutoff 주파수를 설정한다.
+
+기본값 64는 악기 자체에 설정된 기본값이 적용된 상태이다. 보통 이 상태에서는 특별히 잘려나가는 음역이 없다.
 
 #### Data entry 형식
-`MSB` = `CC#81`의 값 형식과 완전히 같음
+`MSB` = `CC#74`의 값 형식과 완전히 같음
 `LSB` = 무시됨
 
 ### High-pass filter(HPF) resonance - `01 25`
 High-pass filter(HPF)의 resonance의 정도를 설정한다.  
 이 값을 기준으로 HPF의 Q 값을 산출한다.
 
-0은 초기값이다.
+기본값 64는 악기 자체에 설정된 기본값이 적용된 상태이다.
 
 #### Data entry 형식
 `MSB` = `CC#71`의 값 형식과 완전히 같음
