@@ -27,7 +27,7 @@
 ```
 - `n` = 미디 채널 번호: 1 - 16(`0x0` - `0xf`)
 - `kk` = note 번호: 0 - 127(`0x00` - `0x7f`,60 (`0x3c`) = 가운데 도)
-- `vv` = velocity(note의 세기): 0 - 127(`0x01` - `0x7f`인데 왜 1부터냐면 0을 집어넣으면 note off로 해석하기 때문)
+- `vv` = velocity(note의 세기): 1 - 127(`0x01` - `0x7f`인데 왜 1부터냐면 0을 집어넣으면 note off로 해석하기 때문)
 
 ## Note aftertouch(Polyphonic aftertouch)
 건반을 누르고 나서 좀 더 힘을 주거나 흔드는 식으로 소리에 변형을 가한다.
